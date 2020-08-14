@@ -1,0 +1,54 @@
+{% extends "layout.html" %}
+{% block content %}
+<h1>IZ*ONE Picture Search</h1>
+
+<form action="/index" method="POST">
+
+    <!-- メンバーのドロップダウンメニュー -->
+    <p>好きなメンバーを選んで下さい</p>
+    <select name="name">
+        <option value="Kwon_Eunbi"> Kwon Eunbi</option>
+        <option value="Sakura_Miyawaki"> Sakura Miyawaki</option>
+        <option value="Hyewon_Kang"> Hyeown Kang</option>
+        <option value="Yena_Choi"> Yena Choi</option>
+        <option value="Cheyeon_Lee"> Chaeyeon Lee</option>
+        <option value="Chewon_Kim"> Chaewon Kim</option>
+        <option value="Minju_Kim"> Minju Kim</option>
+        <option value="Nako_Yabuki"> Nako Yabuki</option>
+        <option value="Hitomi_Honda"> Hitomi Honda</option>
+        <option value="Yuri_Choi"> Yuri Choi</option>
+        <option value="Yujin_Ahn"> Yujin Ahn</option>
+        <option value="Wonyoung_Chang"> Wonyoung Chang</option>
+
+    </select>
+
+    <!-- 検索ボタン -->
+    <input type="submit" value="検索">
+
+    <a href="/">
+        <button type="button">戻る</button>
+    </a>
+</form>
+
+<!-- メンバー名を選ぶ前　-->
+{% if not filelist %}
+
+<p>画像がここに出ます</p>
+
+<!-- sqlite3でエラーが出た時　-->
+{% elif filelist[:12] == "次のエラーが発生しました" %}
+
+    <p>filelist</p>
+
+<!-- メンバー名を選んだ後　-->
+{% else %}
+
+    {% for file in filelist %}
+
+        <img src={{ file }}>
+
+    {% endfor %}
+
+{% endif %}
+
+{% endblock %}
