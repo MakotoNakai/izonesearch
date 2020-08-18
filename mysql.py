@@ -68,8 +68,8 @@ for member in member_list:
               with open(pic_list[index], 'rb') as f:
                      bytea = f.read()
 
-              # Insert a column (name of member, id, binary)
-              cursor.execute("insert into izonetable (member, id, image) VALUES (%s, %s, %s)",(member, index, bytea)) #変更の反映を行う
+                     # Insert a column (name of member, id, binary)
+                     cursor.execute("insert into izonetable (member, id, image) VALUES (%s, %s, %s)",(member, index, bytea)) #変更の反映を行う
 
         # Show the message if done for each member
        print("{} done".format(member))
