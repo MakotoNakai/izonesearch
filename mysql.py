@@ -1,6 +1,5 @@
 # import sqlite3
 import psycopg2
-from psycopg2.extensions import ISOLATION_LEVEL_AUTOCOMMIT
 import glob
 import os
 import io
