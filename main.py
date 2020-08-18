@@ -1,7 +1,9 @@
 from flask import *
+from flask_sqlalchemy import SQLAlchemy
 from PIL import Image
 
-import sqlite3
+#import sqlite3
+import psycopg2
 import os
 import shutil
 import io
@@ -11,7 +13,7 @@ import glob
 
 app = Flask(__name__)
     
-# ランダムな文字列を生成する
+ # ランダムな文字列を生成する
 def generate_random_string():
     randlst = [random.choice(string.ascii_letters + string.digits) for i in range(10)]
     return ''.join(randlst)
@@ -20,28 +22,26 @@ def generate_random_string():
 # メンバーの名前に対応する画像を全部取り出す
 def get_image(member_name):
 
-    PATH = os.path.join(os.getcwd(),"IZONE.db")
-    connect = sqlite3.connect(PATH)
+    connect = psycopg2.connect(
+       dbname = 'd8o6aq59fi4v03',
+       user = 'youylcnkjyfyfy',
+       password = '20a5d945df5a9da524c823962294428191105ef78735d82ff42d3ba216642a5b',
+       host = 'ec2-50-16-198-4.compute-1.amazonaws.com',
+       port = 5432
+    )
     db = connect.cursor()
 
-    # sql = 'SELECT * FROM IZONE WHERE member="{member}" AND id="{ID}"'.format(member=member_name, ID=id)
-    sql = 'SELECT * FROM IZONE WHERE member="{member}"'.format(member=member_name)
-    
-    # コネクションエラーが発生しない限り以下の処理を実行する
+     # コネクションエラーが発生しない限り以下の処理を実行する
     try:
-        db.execute(sql)
-
+        db.execute('SELECT * FROM izonetable WHERE member=%s', (member_name,))
         rows = db.fetchall()
-
         # 全ての画像に関して
         for row in rows:
-
-            filename = './static/'+generate_random_string()+'.jpg'
-
-            # ファイル名に書き込む
-            with open(filename,'wb') as f:
-                f.write(row[2])
-                f.close()
+         filename = './static/'+generate_random_string()+'.jpg'
+         # ファイル名に書き込む
+         with open(filename,'wb') as f:
+             f.write(row[2])
+             f.close()
 
         db.close()
         connect.close()
@@ -53,7 +53,7 @@ def get_image(member_name):
         return filelist
 
     # もし任意のsqlite3エラーが起こったら、エラー文を返す
-    except sqlite3.Error as e:
+    except psycopg2.errors as e:
         return "次のエラーが発生しました:"+e
 
 
@@ -63,9 +63,9 @@ def index():
 
     # staticフォルダ内のjpgファイルを削除
     all_files = glob.glob('static/*.jpg', recursive=True)
-    
+
     for file in all_files:
-        
+
         os.remove(file)
 
     # メンバーの名前を選ぶ

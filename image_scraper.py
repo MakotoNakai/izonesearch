@@ -3,7 +3,7 @@ import urllib.request, urllib.error, urllib.parse
 import os
  
 # Basic info
-max_page = 5# ページ数（20枚/ページ）
+max_page = 2# ページ数（20枚/ページ）
 dst_path = './IZONE/'
 os.makedirs(dst_path, exist_ok=True)
  
@@ -47,8 +47,7 @@ def download(word, num_page, folder):
 
 if __name__ == "__main__":
     
-    words_list = ["Kwon_Eunbi", "Sakura_Miyawaki", "Hyewon_Kang", "Yena_Choi", "Cheyeon_Lee","Chewon_Kim", \
-                    "Minju_Kim", "Nako_Yabuki", "Hitomi_Honda", "Yuri_Choi", "Yujin_Ahn", "Wonyoung_Chang" ]
+    words_list = ["Kwon Eunbi IZONE", "Sakura Miyawaki IZONE", "Hyewon Kang IZONE", "Yena Choi IZONE", "Cheyeon Lee IZONE", "Chewon Kim IZONE", "Minju Kim IZONE", "Nako Yabuki IZONE", "Hitomi Honda IZONE", "Yuri Choi IZONE", "Yujin Ahn IZONE", "Wonyoung Chang IZONE"]
 
     for word in words_list:
         download(word, max_page, dst_path+word)
