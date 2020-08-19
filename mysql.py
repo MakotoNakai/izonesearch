@@ -40,8 +40,8 @@ cursor = connect.cursor()
 create_tb_sql = """ CREATE TABLE IF NOT EXISTS izonetable
                       (member text,
                        id int,
-                       image bytea
-                       primary key (member, id) 
+                       image bytea,
+                       PRIMARY KEY (member, id))
                 """
 
 
