@@ -33,7 +33,7 @@ def get_image(member_name):
 
      # コネクションエラーが発生しない限り以下の処理を実行する
     try:
-        db.execute('SELECT * FROM izonetable WHERE member=%s', (member_name,))
+        db.execute('SELECT * FROM izonetable WHERE member=%s AND id=%s', (member_name, 0))
         rows = db.fetchall()
         # 全ての画像に関して
         for row in rows:
