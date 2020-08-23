@@ -90,7 +90,7 @@ def post():
     # 選んだメンバーの名前を取得
 
     name = request.form["name"]
-    ids = int(request.form["id"])
+    num_pics = int(request.form["num_pics"])
 
     s3_client = boto3.client('s3')
 
@@ -98,7 +98,7 @@ def post():
     BUCKET = 'izonebucket'
     links = []
 
-    for id in range(ids):
+    for id in range(num_pics):
 
         link = s3_client.generate_presigned_url(
             'get_object',
