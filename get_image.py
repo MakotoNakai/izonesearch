@@ -1,39 +1,65 @@
 
-import psycopg2
-import os
+import boto3
 
-# connect = psycopg2.connect(dbname = 'izonedb',port = 5432)
-connect = psycopg2.connect(
-       dbname = 'd8o6aq59fi4v03',
-       user = 'youylcnkjyfyfy',
-       password = '20a5d945df5a9da524c823962294428191105ef78735d82ff42d3ba216642a5b',
-       host = 'ec2-50-16-198-4.compute-1.amazonaws.com',
-       port = 5432
-    )
-db = connect.cursor()
+def get_member(member_name):
 
-try:
-    db.execute("SELECT * FROM izonetable WHERE member='Sakura_Miyawaki'")
-    rows = db.fetchall()
+    if member_name == "Kwon Eunbi":
+        return "Kwon_Eunbi"
+    
+    elif member_name == "Sakura Miyawaki":
+        return "Sakura_Miyawaki"
 
-    # 全ての画像に関して
-    for index in range(len(rows)):
-        row = rows[index]
-        filename = './static/img'+index+'.jpg'
-        # ファイル名に書き込む
-        with open(filename,'wb') as f:
-            f.write(row[2])
-            f.close()
+    elif member_name == "Hyewon Kang":
+        return "Hyewon_Kang"
+        
+    elif member_name == "Yena Choi":
+        return "Yena_Choi"
 
-    # # static ディレクトリのファイルリストを取得
-    # filelist = glob.glob("./static/*")
+    elif member_name == "Cheyeon Lee":
+        return "Cheyeon_Lee"
+        
+    elif member_name == "Chewon Kim":
+        return "Chewon_Kim"
 
-    # # static ディレクトリのファイルリストを返す
-    # return filelist
+    elif member_name == "Minju Kim":
+        return "Minju_Kim"
 
-# もし任意のsqlite3エラーが起こったら、エラー文を返す
-except psycopg2.errors as e:
-    print("次のエラーが発生しました:"+e)
+    elif member_name == "Nako Yabuki":
+        return "Nako_Yabuki"
 
-db.close()
-connect.close()
+    elif member_name == "Hitomi Honda":
+        return "Hitomi_Honda"
+
+    elif member_name == "Yuri Choi":
+        return "Yuri_Choi"
+
+    elif member_name == "Yujin Ahn":
+        return "Yujin_Ahn"
+
+    elif member_name == "Wonyoung Chang":
+        return "Wonyoung_Chang"
+    else:
+        return None
+
+filename = 'img.jpg'
+
+member_name = get_member(input("Input a member name:"))
+id = int(input("ID:"))
+print("Member:", member_name)
+print("id:", id)
+
+import boto3
+
+s3_client = boto3.client('s3')
+
+BUCKET = 'izonebucket'
+OBJECT = 'IZONE/{}/pic_{}.jpg'.format(member_name, id)
+
+url = s3_client.generate_presigned_url(
+    'get_object',
+    Params={'Bucket': BUCKET, 'Key': OBJECT},
+    ExpiresIn=300)
+
+print(url)
+
+

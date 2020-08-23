@@ -19,7 +19,19 @@
         <option value="Yuri_Choi"> Yuri Choi</option>
         <option value="Yujin_Ahn"> Yujin Ahn</option>
         <option value="Wonyoung_Chang"> Wonyoung Chang</option>
-
+    </select>
+    <select name="id">
+        <option value="0"> 0</option>
+        <option value="1"> 1</option>
+        <option value="2"> 2</option>
+        <option value="3"> 3</option>
+        <option value="4"> 4</option>
+        <option value="5"> 5</option>
+        <option value="6"> 6</option>
+        <option value="7"> 7</option>
+        <option value="8">8</option>
+        <option value="9"> 9</option>
+        <option value="10"> 10</option>
     </select>
 
     <!-- 検索ボタン -->
@@ -31,24 +43,16 @@
 </form>
 
 <!-- メンバー名を選ぶ前　-->
-{% if not filelist %}
+{% if link %}
 
-<p>画像がここに出ます</p>
-
-<!-- sqlite3でエラーが出た時　-->
-{% elif filelist[:12] == "次のエラーが発生しました" %}
-
-    <p>filelist</p>
+    <img src = {{link}}>
 
 <!-- メンバー名を選んだ後　-->
 {% else %}
 
-    {% for file in filelist %}
-
-        <img src={{ file }}>
-
-    {% endfor %}
+    <p>画像がここに出ます</p>
 
 {% endif %}
 
 {% endblock %}
+

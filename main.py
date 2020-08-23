@@ -10,6 +10,7 @@ import io
 import random
 import string
 import glob
+import boto3
 
 app = Flask(__name__)
     
@@ -18,80 +19,91 @@ def generate_random_string():
     randlst = [random.choice(string.ascii_letters + string.digits) for i in range(10)]
     return ''.join(randlst)
 
-
 # メンバーの名前に対応する画像を全部取り出す
-def get_image(member_name):
+# def get_name(member_name):
 
-    connect = psycopg2.connect(
-       dbname = 'd8o6aq59fi4v03',
-       user = 'youylcnkjyfyfy',
-       password = '20a5d945df5a9da524c823962294428191105ef78735d82ff42d3ba216642a5b',
-       host = 'ec2-50-16-198-4.compute-1.amazonaws.com',
-       port = 5432
-    )
-    db = connect.cursor()
+    # connect = psycopg2.connect(
+    #    dbname = 'd8o6aq59fi4v03',
+    #    user = 'youylcnkjyfyfy',
+    #    password = '20a5d945df5a9da524c823962294428191105ef78735d82ff42d3ba216642a5b',
+    #    host = 'ec2-50-16-198-4.compute-1.amazonaws.com',
+    #    port = 5432
+    # )
+    # db = connect.cursor()
 
-     # コネクションエラーが発生しない限り以下の処理を実行する
-    try:
-        db.execute('SELECT * FROM izonetable WHERE member=%s AND id=%s', (member_name, 0))
-        rows = db.fetchall()
-        # 全ての画像に関して
-        for row in rows:
-         filename = './static/'+generate_random_string()+'.jpg'
-         # ファイル名に書き込む
-         with open(filename,'wb') as f:
-             f.write(row[2])
-             f.close()
+    #  # コネクションエラーが発生しない限り以下の処理を実行する
+    # try:
+    #     db.execute('SELECT * FROM izonetable WHERE member=%s AND id=%s', (member_name, 0))
+    #     rows = db.fetchall()
+    #     # 全ての画像に関して
+    #     for row in rows:
+    #      filename = './static/'+generate_random_string()+'.jpg'
+    #      # ファイル名に書き込む
+    #      with open(filename,'wb') as f:
+    #          f.write(row[2])
+    #          f.close()
 
-        db.close()
-        connect.close()
+    #     db.close()
+    #     connect.close()
 
-        # static ディレクトリのファイルリストを取得
-        filelist = glob.glob("./static/*")
+    #     # static ディレクトリのファイルリストを取得
+    #     filelist = glob.glob("./static/*")
 
-        # static ディレクトリのファイルリストを返す
-        return filelist
+    #     # static ディレクトリのファイルリストを返す
+    #     return filelist
 
-    # もし任意のsqlite3エラーが起こったら、エラー文を返す
-    except psycopg2.errors as e:
-        return "次のエラーが発生しました:"+e
+    # # もし任意のsqlite3エラーが起こったら、エラー文を返す
+    # except psycopg2.errors as e:
+    #     return "次のエラーが発生しました:"+e
 
+    
 
 # 最初の画面
 @app.route('/', methods=["GET"])
 def index():
 
-    # staticフォルダ内のjpgファイルを削除
-    all_files = glob.glob('static/*.jpg', recursive=True)
+    # # staticフォルダ内のjpgファイルを削除
+    # all_files = glob.glob('static/*.jpg', recursive=True)
 
-    for file in all_files:
+    # for file in all_files:
 
-        os.remove(file)
+    #     os.remove(file)
 
     # メンバーの名前を選ぶ
     name = request.form.get("name")
 
     # とりあえず最初は filelist は None
     filelist = None
+    id = None
 
-    return render_template("index.html",name=name, filelist=filelist)
+    # return render_template("index.html",name=name, filelist=filelist)
+    return render_template("index.html", link = None)
 
-
-@app.route('/static/<path:path>')
-def send_image(path):
-    return send_from_directory('./static', path)
+# @app.route('/static/<path:path>')
+# def send_image(path):
+#     return send_from_directory('./static', path)
 
 
 @app.route('/index', methods=["POST"])
 def post():
 
     # 選んだメンバーの名前を取得
+
     name = request.form["name"]
+    id = request.form["id"]
+
+    s3 = boto3.client('s3')
+    bucket = 'izonebucket'
+    bucket_location = s3.get_bucket_location(Bucket = bucket)
+    target_object_path = "IZONE/{}/pic_{}.jpg".format(name, id)
+    # link = "https://s3-{0}.amazonaws.com/{1}/{2}".format(bucket_location['LocationConstraint'], bucket, target_object_path)
+    link = "https://izonebucket.s3.amazonaws.com/IZONE/Sakura_Miyawaki/pic_0.jpg?AWSAccessKeyId=AKIAIKBVWJ6VSR3TVXRQ&Signature=f4q7EnRqbvpK7%2BLBb2NyYnv4XqI%3D&Expires=1598151386"
+    return render_template("index.html", link=link)
 
     # メンバーの画像全て取得
-    filelist = get_image(name)
+    # filelist = get_image(name)
 
-    return render_template("index.html",name=name, id=id, filelist=filelist)
+    # return render_template("index.html",name=name, id=id, filelist=filelist)
 
 
 
