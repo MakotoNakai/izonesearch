@@ -48,8 +48,6 @@ id = int(input("ID:"))
 print("Member:", member_name)
 print("id:", id)
 
-import boto3
-
 s3_client = boto3.client('s3')
 
 BUCKET = 'izonebucket'

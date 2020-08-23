@@ -92,12 +92,16 @@ def post():
     name = request.form["name"]
     id = request.form["id"]
 
-    s3 = boto3.client('s3')
-    bucket = 'izonebucket'
-    bucket_location = s3.get_bucket_location(Bucket = bucket)
-    target_object_path = "IZONE/{}/pic_{}.jpg".format(name, id)
-    # link = "https://s3-{0}.amazonaws.com/{1}/{2}".format(bucket_location['LocationConstraint'], bucket, target_object_path)
-    link = "https://izonebucket.s3.amazonaws.com/IZONE/Sakura_Miyawaki/pic_0.jpg?AWSAccessKeyId=AKIAIKBVWJ6VSR3TVXRQ&Signature=f4q7EnRqbvpK7%2BLBb2NyYnv4XqI%3D&Expires=1598151386"
+    s3_client = boto3.client('s3')
+
+    BUCKET = 'izonebucket'
+    OBJECT = 'IZONE/{}/pic_{}.jpg'.format(name, id)
+
+    link = s3_client.generate_presigned_url(
+        'get_object',
+        Params={'Bucket': BUCKET, 'Key': OBJECT},
+        ExpiresIn=300)
+
     return render_template("index.html", link=link)
 
     # メンバーの画像全て取得
