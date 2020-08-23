@@ -77,7 +77,7 @@ def index():
     id = None
 
     # return render_template("index.html",name=name, filelist=filelist)
-    return render_template("index.html", link = None)
+    return render_template("index.html", links = None)
 
 # @app.route('/static/<path:path>')
 # def send_image(path):
@@ -90,19 +90,24 @@ def post():
     # 選んだメンバーの名前を取得
 
     name = request.form["name"]
-    id = request.form["id"]
+    ids = int(request.form["id"])
 
     s3_client = boto3.client('s3')
 
+
     BUCKET = 'izonebucket'
-    OBJECT = 'IZONE/{}/pic_{}.jpg'.format(name, id)
+    links = []
 
-    link = s3_client.generate_presigned_url(
-        'get_object',
-        Params={'Bucket': BUCKET, 'Key': OBJECT},
-        ExpiresIn=300)
+    for id in range(ids):
 
-    return render_template("index.html", link=link)
+        link = s3_client.generate_presigned_url(
+            'get_object',
+            Params={'Bucket': BUCKET, 'Key': 'IZONE/{}/pic_{}.jpg'.format(name, str(id))},
+            ExpiresIn=300)
+            
+        links.append(link)
+
+    return render_template("index.html", links=links)
 
     # メンバーの画像全て取得
     # filelist = get_image(name)
