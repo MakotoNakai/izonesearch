@@ -1,0 +1,29 @@
+{% extends "layout.html" %}
+{% block content %}
+<h1>IZ*ONE Picture Search</h1>
+
+    <p>{{name}}の画像を{{num_pics}}枚表示しています。</p>     
+    <a href="/">
+        <button type="button">Back</button>
+    </a>
+
+    <br>
+
+
+
+
+<!-- メンバー名を選ぶ前　-->
+{% if links %}
+
+    {% for link in links %}
+        <img src = {{link}}>
+    {% endfor %}
+
+<!-- メンバー名を選んだ後　-->
+{% else %}
+
+    <p>画像がここに出ます</p>
+
+{% endif %}
+
+{% endblock %}
