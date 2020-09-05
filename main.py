@@ -1,8 +1,8 @@
 
 from flask import *
 from PIL import Image
+import os
 import glob
-import boto3
 import random
 
 app = Flask(__name__)
@@ -54,14 +54,15 @@ def post():
         try:
             DATABASE_URL = os.environ['DATABASE_URL']
             connect = psycopg2.connect(DATABASE_URL, sslmode='require')
-            cursor = connect.cursor(query, (name, id))  
+            cursor = connect.cursor()  
+            cursor.execute(query, (name, id))
             image = cursor.fetchone()[0]
 
             with open(image, filename) as f:
                 f.write(image)
             file_list.append(filename)
 
-        except Error as e:
+        except Exception as e:
             print(e)
 
         finally:
