@@ -4,6 +4,7 @@ from PIL import Image
 import os
 import glob
 import random
+import psycopg2
 
 app = Flask(__name__)
 
@@ -51,10 +52,12 @@ def post():
         query = "SELECT * FROM izonetable WHERE member = %s AND id = %s"
         filename = "image{}.png".format(id)
 
+        DATABASE_URL = os.environ['DATABASE_URL']
+        connect = psycopg2.connect(DATABASE_URL, sslmode='require')
+        cursor = connect.cursor() 
+
         try:
-            DATABASE_URL = os.environ['DATABASE_URL']
-            connect = psycopg2.connect(DATABASE_URL, sslmode='require')
-            cursor = connect.cursor()  
+             
             cursor.execute(query, (name, id))
             image = cursor.fetchone()[0]
 
