@@ -50,7 +50,7 @@ def post():
     for id in id_list:
 
         query = "SELECT * FROM izonetable WHERE member = %s AND id = %s"
-        filename = "image{}.png".format(id)
+        filename = "pic_{}.png".format(id)
 
         DATABASE_URL = os.environ['DATABASE_URL']
         connect = psycopg2.connect(DATABASE_URL, sslmode='require')
@@ -58,7 +58,7 @@ def post():
 
         try:
              
-            cursor.execute(query, (name, id))
+            cursor.execute(query, (name, id,))
             image = cursor.fetchone()[0]
 
             with open(image, filename) as f:
