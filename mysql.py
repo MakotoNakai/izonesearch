@@ -8,34 +8,9 @@ import io
 # postgres://youylcnkjyfyfy:20a5d945df5a9da524c823962294428191105ef78735d82ff42d3ba216642a5b@ec2-50-16-198-4.compute-1.amazonaws.com:5432/d8o6aq59fi4v03
 
 # Connect to PostgreSQL DBMS
-connect = psycopg2.connect(dbname="d8o6aq59fi4v03",
-                            user="youylcnkjyfyfy",
-                            password="20a5d945df5a9da524c823962294428191105ef78735d82ff42d3ba216642a5b", 
-                            host="ec2-50-16-198-4.compute-1.amazonaws.com",
-                            port=5432)
-# connect.set_isolation_level(ISOLATION_LEVEL_AUTOOMMIT)
-# print(connect.get_backendpid())
-
-# Obtain a DB Cursor
+DATABASE_URL = os.environ['DATABASE_URL']
+connect = psycopg2.connect(DATABASE_URL, sslmode='require')
 cursor = connect.cursor()
-
- 
-# Create table statement
-#sqlCreateDatabase = "create database "+name_Database+";"
-
-# Create a table in PostgreSQL database
-#cursor.execute(sqlCreateDatabase)
-
-# Build a database
-# dsn = os.environ.get('DATABASE_URL')
-# connect = sqlite3.connect(PATH)
-# cursor = connect.cursor()
-# connect = psycopg2.connect(dbname=db_name, user=username, password=password)
-# cursor = connect.cursor()
-
-# Create a table
-# delete_tb_sql = "drop table izonetable"
-# cursor.execute(delete_tb_sql)
 
 create_tb_sql = """ CREATE TABLE IF NOT EXISTS izonetable
                       (member text,

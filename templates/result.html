@@ -13,10 +13,10 @@
 
 
 <!-- メンバー名を選ぶ前　-->
-{% if links %}
+{% if file_list %}
 
-    {% for link in links %}
-        <img src = {{link}}>
+    {% for file in file_list %}
+        <img src = {{file}}>
     {% endfor %}
 
 <!-- メンバー名を選んだ後　-->
