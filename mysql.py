@@ -8,8 +8,10 @@ import io
 # postgres://youylcnkjyfyfy:20a5d945df5a9da524c823962294428191105ef78735d82ff42d3ba216642a5b@ec2-50-16-198-4.compute-1.amazonaws.com:5432/d8o6aq59fi4v03
 
 # Connect to PostgreSQL DBMS
-DATABASE_URL = os.environ['DATABASE_URL']
+DATABASE_URL = "postgres://youylcnkjyfyfy:20a5d945df5a9da524c823962294428191105ef78735d82ff42d3ba216642a5b@ec2-50-16-198-4.compute-1.amazonaws.com:5432/d8o6aq59fi4v03"
+
 connect = psycopg2.connect(DATABASE_URL, sslmode='require')
+# connect = psycopg2.connect("user=postgres dbname=izonedb")
 cursor = connect.cursor()
 
 create_tb_sql = """ CREATE TABLE IF NOT EXISTS izonetable
@@ -37,12 +39,16 @@ for member in member_list:
         # For each pic
        for index in range(len(pic_list)):
 
-            # Change an image data into binary string
-              with open(pic_list[index], 'rb') as f:
-                     binary = f.read()
-                     # Insert a column (name of member, id, binary)
-                     cursor.execute("INSERT INTO izonetable (member, id, image) VALUES (%s, %s, %s)",(member, index, psycopg2.Binary(binary))) #変更の反映を行う
-                     connect.commit()
+              fp = open(pic_list[index], 'rb').read()
+              cursor.execute("INSERT INTO izonetable (member, id, image) VALUES (%s, %s, %s)",(member, index, psycopg2.Binary(fp))) #変更の反映を行う
+              connect.commit()
+
+       #      # Change an image data into binary string
+       #        with open(pic_list[index], 'rb') as f:
+       #               binary = f.read()
+       #               # Insert a column (name of member, id, binary)
+       #               cursor.execute("INSERT INTO izonetable (member, id, image) VALUES (%s, %s, %s)",(member, index, binary)) #変更の反映を行う
+       #               connect.commit()
 
         # Show the message if done for each member
        print("{} done".format(member))
@@ -50,4 +56,5 @@ for member in member_list:
 
 # # Close the database
  #データベースを閉じる
+cursor.close()
 connect.close()

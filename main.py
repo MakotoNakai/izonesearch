@@ -47,22 +47,27 @@ def post():
     id_list = [random.randint(0, 40) for i in range(num_pics)]
     file_list = []
 
-    for id in id_list:
+    for id_ in id_list:
 
         query = "SELECT * FROM izonetable WHERE member = %s AND id = %s"
-        filename = "pic_{}.png".format(id)
+        filename = "./static/pic_{}.jpg".format(id_)
 
-        DATABASE_URL = os.environ['DATABASE_URL']
+        # connect = psycopg2.connect("user=postgres dbname=izonedb")
+        # cursor = connect.cursor()
+        DATABASE_URL = "postgres://youylcnkjyfyfy:20a5d945df5a9da524c823962294428191105ef78735d82ff42d3ba216642a5b@ec2-50-16-198-4.compute-1.amazonaws.com:5432/d8o6aq59fi4v03"
         connect = psycopg2.connect(DATABASE_URL, sslmode='require')
         cursor = connect.cursor() 
 
         try:
              
-            cursor.execute(query, (name, id,))
-            image = cursor.fetchone()[0]
+            cursor.execute(query, (name, id_))
+            fetch = cursor.fetchone()
+            print(fetch)
+            
+            image = fetch[2]
 
-            with open(image, filename) as f:
-                f.write(image)
+            with open(filename, 'wb') as f:
+                f.write(bytes(image))
             file_list.append(filename)
 
         except Exception as e:
