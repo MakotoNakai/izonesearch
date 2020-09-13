@@ -62,7 +62,6 @@ def post():
              
             cursor.execute(query, (name, id_))
             fetch = cursor.fetchone()
-            print(fetch)
             
             image = fetch[2]
 

@@ -1,0 +1,17 @@
+
+html, body{
+    margin: 10;         /* 余白の削除 */
+    padding: 10;        /* 余白の削除 */
+    width:100%;
+    height:100%;
+}
+
+
+#header
+{
+    top: 900px;                   /* 位置(上0px) */
+    left: 20px;                  /* 位置(右0px) */
+    width: 100%;                /* 横幅100%　*/
+    height: 140px;              /* 縦幅140px */
+    white-space: nowrap;
+}
