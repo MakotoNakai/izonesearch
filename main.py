@@ -54,7 +54,7 @@ def post():
             connect.close()
 
     brower = webdriver.Chrome()
-    brower.get('')
+    brower.get('https://izonesearch.herokuapp.com')
     return render_template("result.html", file_list=file_list, name = name.replace('_', ' '), num_pics=num_pics)
 
 
