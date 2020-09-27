@@ -3,9 +3,45 @@
     <head>
         <title>IZ*ONE Picture Search</title>
         <link rel="stylesheet" href="../static/css/main.css">
+        <script type="text/javascript" src="../static/js/script.js"></script>
+
     </head>
+
     <body>
-        {% block content %}
-        {% endblock %}
+
+    <h1>IZ*ONE Picture Search</h1>
+
+    <form action="/index" method="POST">
+
+        <!-- メンバーのドロップダウンメニュー -->
+        <p>好きなメンバーを選んで下さい</p>
+        メンバー名
+        <select name="name">
+            <option value="Kwon_Eunbi"> Kwon Eunbi</option>
+            <option value="Sakura_Miyawaki"> Sakura Miyawaki</option>
+            <option value="Hyewon_Kang"> Hyeown Kang</option>
+            <option value="Yena_Choi"> Yena Choi</option>
+            <option value="Cheyeon_Lee"> Chaeyeon Lee</option>
+            <option value="Chewon_Kim"> Chaewon Kim</option>
+            <option value="Minju_Kim"> Minju Kim</option>
+            <option value="Nako_Yabuki"> Nako Yabuki</option>
+            <option value="Hitomi_Honda"> Hitomi Honda</option>
+            <option value="Yuri_Choi"> Yuri Choi</option>
+            <option value="Yujin_Ahn"> Yujin Ahn</option>
+            <option value="Wonyoung_Chang"> Wonyoung Chang</option>
+        </select><br>
+
+        画像の枚数
+        <select name="num_pics">
+            <option value="1"> 1</option>
+            <option value="5"> 5</option>
+            <option value="10">10</option>
+            <option value="20">20</option>
+        </select>
+
+    {% block content %}
+    {% endblock %}
+
     </body>
 </html>
+ 
