@@ -1,4 +1,5 @@
 from selenium.webdriver.support.ui import Select
+from selenium import webdriver
 from flask import *
 from PIL import Image
 import os
@@ -52,7 +53,8 @@ def post():
             cursor.close()
             connect.close()
 
-
+    brower = webdriver.Chrome()
+    brower.get('')
     return render_template("result.html", file_list=file_list, name = name.replace('_', ' '), num_pics=num_pics)
 
 
