@@ -1,5 +1,4 @@
-from selenium.webdriver.support.ui import Select
-from selenium import webdriver
+
 from flask import *
 from PIL import Image
 import os
@@ -20,17 +19,30 @@ def index():
 @app.route('/index', methods=["POST"])
 def post():
 
+    for file in glob.glob('./static/pics/*.jpg'):
+        os.remove(file)
+
     # 選んだメンバーの名前を取得
     name = request.form.get("name")
     num_pics = int(request.form.get("num_pics"))
 
     id_list = [random.randint(0, 40) for i in range(num_pics)]
+    value_list = ["Kwon_Eunbi", "Sakura_Miyawaki", "Hyewon_Kang", "Yena_Choi", "Cheyeon_Lee", \
+                "Chewon_Kim", "Minju_Kim", "Nako_Yabuki", "Hitomi_Honda", "Yuri_Choi", "Yujin_Ahn", "Wonyoung_Chang"]
+    name_list = ["Kwon Eunbi", "Sakura Miyawaki", "Hyewon Kang", "Yena Choi", "Cheyeon Lee", \
+                "Chewon Kim", "Minju Kim", "Nako Yabuki", "Hitomi Honda", "Yuri Choi", "Yujin Ahn", "Wonyoung hang"]
+    choice_name_list = [(value, name) for value, name in zip(value_list, name_list)]
+
+    num_pics_list = [str(num) for num in [1, 5, 10, 20]]
+    choice_num_pics_list = [(num, num) for num in num_pics_list]
+
+
     file_list = []
 
     for id_ in id_list:
 
         query = "SELECT * FROM izonetable WHERE member = %s AND id = %s"
-        filename = "./pics/pic_{}.jpg".format(id_)
+        filename = "./static/pics/pic_{}.jpg".format(id_)
 
         DATABASE_URL = "postgres://youylcnkjyfyfy:20a5d945df5a9da524c823962294428191105ef78735d82ff42d3ba216642a5b@ec2-50-16-198-4.compute-1.amazonaws.com:5432/d8o6aq59fi4v03"
         connect = psycopg2.connect(DATABASE_URL, sslmode='require')
@@ -53,9 +65,7 @@ def post():
             cursor.close()
             connect.close()
 
-    brower = webdriver.Chrome()
-    brower.get('https://izonesearch.herokuapp.com')
-    return render_template("result.html", file_list=file_list, name = name.replace('_', ' '), num_pics=num_pics)
+    return render_template("result.html", file_list=file_list)
 
 
 

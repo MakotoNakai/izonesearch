@@ -1,25 +1,67 @@
-{% extends "layout.html" %}
-{% block content %}
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>IZ*ONE Picture Search</title>
+        <link rel="stylesheet" href="../static/css/main.css">
+        
 
-<button type="submit">Search</button>
-</form>
+    </head>
 
-<!-- <form action="/" method="GET">
-<button type="button">Back</button>
-</form> -->
+    <body>
+
+    <h1>IZ*ONE Picture Search</h1>
+
+    <form action="/index" name="dropdown" method="POST">
+
+        <!-- メンバーのドロップダウンメニュー -->
+        <p>好きなメンバーを選んで下さい</p>
+        メンバー名
+        <select name="name">
+            <option value="Kwon_Eunbi"> Kwon Eunbi</option>
+            <option value="Sakura_Miyawaki"> Sakura Miyawaki</option>
+            <option value="Hyewon_Kang"> Hyeown Kang</option>
+            <option value="Yena_Choi"> Yena Choi</option>
+            <option value="Cheyeon_Lee"> Chaeyeon Lee</option>
+            <option value="Chewon_Kim"> Chaewon Kim</option>
+            <option value="Minju_Kim"> Minju Kim</option>
+            <option value="Nako_Yabuki"> Nako Yabuki</option>
+            <option value="Hitomi_Honda"> Hitomi Honda</option>
+            <option value="Yuri_Choi"> Yuri Choi</option>
+            <option value="Yujin_Ahn"> Yujin Ahn</option>
+            <option value="Wonyoung_Chang"> Wonyoung Chang</option>
+        </select><br>
+
+        画像の枚数
+        <select name="num_pics">
+            <option value="1"> 1</option>
+            <option value="5"> 5</option>
+            <option value="10">10</option>
+            <option value="20">20</option>
+        </select>
+
+        <button type="submit">Search</button>
+        </form>
+            
+        <!-- メンバー名を選ぶ前　-->
+        {% if file_list %}
+        
+            {% for file in file_list %}
+                <img src = {{file}}>
+            {% endfor %}
+        
+        <!-- メンバー名を選んだ後　-->
+        {% else %}
+        
+            <p>画像がここに出ます</p>
+        
+        {% endif %}
+        
+        <form action="/" method="get">
+            <input type="submit" value='back'>
+        </form>
     
-<!-- メンバー名を選ぶ前　-->
-{% if file_list %}
 
-    {% for file in file_list %}
-        <img src = {{file}}>
-    {% endfor %}
+    </body>
+</html>
+ 
 
-<!-- メンバー名を選んだ後　-->
-{% else %}
-
-    <p>画像がここに出ます</p>
-
-{% endif %}
-
-{% endblock %}
