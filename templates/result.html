@@ -18,8 +18,8 @@
         メンバー名
         <select name="name">
             <option value="" disabled style="display:none;">  Member Name </option>
-            {% for option in select_name %}
-                {{ option }}
+            {% for option in option_list_name %}
+                <option value="{{option[0]}}" {{option[2]}}> {{option[1]}}</option>
             {% endfor %}
             <!-- <option value="Kwon_Eunbi"> Kwon Eunbi</option>
             <option value="Sakura_Miyawaki"> Sakura Miyawaki</option>
@@ -38,8 +38,8 @@
         画像の枚数
         <select name="num_pics">
             <option value="" disabled style="display:none;"> Page Number</option>
-            {% for option in select_num_pics %}
-                {{ option }}
+            {% for option in option_list_num_pics %}
+                <option value="{{option[0]}}" {{option[2]}}> {{option[1]}} </option>
             {% endfor %}
             <!-- <option value="1"> 1</option>
             <option value="5"> 5</option>

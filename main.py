@@ -25,8 +25,6 @@ def post():
     # 選んだメンバーの名前を取得
     name = request.form.get("name")
     num_pics = int(request.form.get("num_pics"))
-    print(name)
-    print(num_pics)
 
 
     select_name = []
@@ -34,23 +32,17 @@ def post():
                 "Chewon_Kim", "Minju_Kim", "Nako_Yabuki", "Hitomi_Honda", "Yuri_Choi", "Yujin_Ahn", "Wonyoung_Chang"]
     name_list = ["Kwon Eunbi", "Sakura Miyawaki", "Hyewon Kang", "Yena Choi", "Cheyeon Lee", \
                 "Chewon Kim", "Minju Kim", "Nako Yabuki", "Hitomi Honda", "Yuri Choi", "Yujin Ahn", "Wonyoung hang"]
+    option_list_name = [[value, name, None] for value, name in zip(value_list, name_list)]
+    for idx in range(len(value_list)):
+        if name_list[idx] == name:
+            option_list_name[idx][2] = 'selected'
 
-    for num in range(len(value_list)):
-        if name_list[num] == name:
-            select_name.append('<option value="{}" selected> {} </option>'.format(value_list[num], name_list[num]))
-        else:
-            select_name.append('<option value="{}"> {} </option>'.format(value_list[num], name_list[num]))
-
-
-    select_num_pics = []
+    
     num_pics_list = [1, 5, 10, 20]
-
+    option_list_num_pics = [[num, num, None] for num in num_pics_list]
     for idx in range(len(num_pics_list)):
         if num_pics_list[idx] == num_pics:
-            select_num_pics.append('<option value='+str(num_pics_list[idx])+'selected>'+str(num_pics_list[idx])+'</option>')
-        else:
-            select_num_pics.append('<option value='+str(num_pics_list[idx])+'>'+str(num_pics_list[idx])+'</option>')
-
+            option_list_num_pics[idx][2] = 'selected'
 
     file_list = []
 
@@ -81,7 +73,7 @@ def post():
             cursor.close()
             connect.close()
 
-    return render_template("result.html", select_name=select_name, select_num_pics=select_num_pics, file_list=file_list)
+    return render_template("result.html", option_list_name=option_list_name, option_list_num_pics=option_list_num_pics, file_list=file_list)
 
 
 
