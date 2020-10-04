@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>IZ*ONE Picture Search</title>
+        <link rel="stylesheet" href="../static/css/main.css">
+        <script type="text/javascript" src="../static/javascript/main.js"></script>
+    </head>
+
+    <body>
+
+        <select class="time" name="start_time">
+            <option value="" disabled style="display:none;" <?php if(empty($_POST['start_time'])) echo 'selected'; ?>>選択してください</option>
+            <option value="1" <?php echo array_key_exists('start_time', $_POST) && $_POST['start_time'] == '1' ? 'selected' : ''; ?>>19:00</option>
+            <option value="2" <?php echo array_key_exists('start_time', $_POST) && $_POST['start_time'] == '2' ? 'selected' : ''; ?>>19:30</option>
+            <option value="3" <?php echo array_key_exists('start_time', $_POST) && $_POST['start_time'] == '3' ? 'selected' : ''; ?>>20:00</option>
+        </select>
+    </body>
+</html>
