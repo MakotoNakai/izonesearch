@@ -12,7 +12,15 @@ app = Flask(__name__)
 @app.route('/', methods=["GET"])
 def index():
 
-    return render_template("index.html")
+    value_list = ["Kwon_Eunbi", "Sakura_Miyawaki", "Hyewon_Kang", "Yena_Choi", "Cheyeon_Lee", \
+                "Chewon_Kim", "Minju_Kim", "Nako_Yabuki", "Hitomi_Honda", "Yuri_Choi", "Yujin_Ahn", "Wonyoung_Chang"]
+    name_list = ["Kwon Eunbi", "Sakura Miyawaki", "Hyewon Kang", "Yena Choi", "Cheyeon Lee", \
+                "Chewon Kim", "Minju Kim", "Nako Yabuki", "Hitomi Honda", "Yuri Choi", "Yujin Ahn", "Wonyoung hang"]
+
+    # selected_list = ["selected" if i == value_list.index(name) else None for i in range(len(value_list))]
+
+
+    return render_template("index.html", lists=zip(value_list, name_list))
 
 
 
@@ -26,24 +34,17 @@ def post():
     name = request.form.get("name")
     num_pics = request.form.get("num_pics")
 
-
-    select_name = []
     value_list = ["Kwon_Eunbi", "Sakura_Miyawaki", "Hyewon_Kang", "Yena_Choi", "Cheyeon_Lee", \
                 "Chewon_Kim", "Minju_Kim", "Nako_Yabuki", "Hitomi_Honda", "Yuri_Choi", "Yujin_Ahn", "Wonyoung_Chang"]
     name_list = ["Kwon Eunbi", "Sakura Miyawaki", "Hyewon Kang", "Yena Choi", "Cheyeon Lee", \
                 "Chewon Kim", "Minju Kim", "Nako Yabuki", "Hitomi Honda", "Yuri Choi", "Yujin Ahn", "Wonyoung hang"]
-    
-    option_list_name = [[value, name] for value, name in zip(value_list, name_list)]
-    # for idx in range(len(value_list)):
-    #     if name_list[idx] == name:
-    #         option_list_name[idx][2] = 'selected'
+    selected_name_list = ["selected" if i == value_list.index(name) else None for i in range(len(value_list))]
 
     
     num_pics_list = [1, 5, 10, 20]
-    option_list_num_pics = [[str(num), str(num)] for num in num_pics_list]
-    # for idx in range(len(num_pics_list)):
-    #     if num_pics_list[idx] == num_pics:
-    #         option_list_num_pics[idx][2] = 'selected'
+    str_pics_list = [str(num) for num in num_pics_list]
+    selected_pics_list = ["selected" if i == str_pics_list.index(num_pics) else None for i in range(len(num_pics_list))]
+
 
     file_list = []
 
@@ -74,8 +75,7 @@ def post():
             cursor.close()
             connect.close()
 
-    return render_template("result.html", name=name, num_pics=num_pics, option_list_name=option_list_name, option_list_num_pics=option_list_num_pics, file_list=file_list)
-
+    return render_template("result.html", lists1=zip(value_list, name_list, selected_name_list), lists2=zip(str_pics_list, num_pics_list, selected_pics_list), file_list=file_list)
 
 
 if __name__ == "__main__":
