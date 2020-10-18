@@ -17,10 +17,11 @@ def index():
     name_list = ["Kwon Eunbi", "Sakura Miyawaki", "Hyewon Kang", "Yena Choi", "Cheyeon Lee", \
                 "Chewon Kim", "Minju Kim", "Nako Yabuki", "Hitomi Honda", "Yuri Choi", "Yujin Ahn", "Wonyoung hang"]
 
-    # selected_list = ["selected" if i == value_list.index(name) else None for i in range(len(value_list))]
+    num_pics_list = [1, 5, 10, 20]
+    str_pics_list = [str(num) for num in num_pics_list]
 
 
-    return render_template("index.html", lists=zip(value_list, name_list))
+    return render_template("index.html", lists1=zip(value_list, name_list), lists2=zip(num_pics_list, str_pics_list))
 
 
 

@@ -17,7 +17,7 @@
         <p>好きなメンバーを選んで下さい</p>
         メンバー名
         <select name="name">
-            {% for value, name in lists %}
+            {% for value, name in lists1 %}
                 <option value={{value}}>{{name}}</option>
             {% endfor %}
         </select><br>
@@ -25,11 +25,9 @@
 
         画像の枚数
         <select name="num_pics">
-            <option value="" disabled style="display:none;"> Page Number</option>
-            <option value="1"> 1</option>
-            <option value="5"> 5</option>
-            <option value="10">10</option>
-            <option value="20">20</option>
+            {% for value, number in lists2 %}
+                <option value={{value}}>{{number}}</option>
+            {% endfor %}
         </select>
 
     
