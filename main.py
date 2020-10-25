@@ -12,19 +12,26 @@ app = Flask(__name__)
 @app.route('/')
 def main():
 
+    # 選んだメンバーの名前を取得
+
     value_list = ["Kwon_Eunbi", "Sakura_Miyawaki", "Hyewon_Kang", "Yena_Choi", "Cheyeon_Lee", \
-                "Chewon_Kim", "Minju_Kim", "Nako_Yabuki", "Hitomi_Honda", "Yuri_Choi", "Yujin_Ahn", "Wonyoung_Chang"]
+            "Chewon_Kim", "Minju_Kim", "Nako_Yabuki", "Hitomi_Honda", "Yuri_Choi", "Yujin_Ahn", "Wonyoung_Chang"]
     name_list = ["Kwon Eunbi", "Sakura Miyawaki", "Hyewon Kang", "Yena Choi", "Cheyeon Lee", \
                 "Chewon Kim", "Minju Kim", "Nako Yabuki", "Hitomi Honda", "Yuri Choi", "Yujin Ahn", "Wonyoung hang"]
-    
+
     num_pics_list = [1, 5, 10, 20]
     str_pics_list = [str(num) for num in num_pics_list]
 
-    return render_template("index.html", lists1=zip(value_list, name_list), lists2=zip(num_pics_list, str_pics_list))
-    
+    selected_name_list = ["selected" if i == 0 else None for i in range(len(value_list))]
+    selected_pics_list = ["selected" if i == 0 else None for i in range(len(num_pics_list))]
+
+    return render_template("index.html", lists1=zip(value_list, name_list, selected_name_list), lists2=zip(num_pics_list, str_pics_list, selected_pics_list))
+
 
 @app.route('/index', methods=["POST"])
 def index():
+
+    page_moved = True
 
     # 選んだメンバーの名前を取得
     name = request.form.get("name")
@@ -34,13 +41,14 @@ def index():
         os.remove(file)
 
     value_list = ["Kwon_Eunbi", "Sakura_Miyawaki", "Hyewon_Kang", "Yena_Choi", "Cheyeon_Lee", \
-                "Chewon_Kim", "Minju_Kim", "Nako_Yabuki", "Hitomi_Honda", "Yuri_Choi", "Yujin_Ahn", "Wonyoung_Chang"]
+            "Chewon_Kim", "Minju_Kim", "Nako_Yabuki", "Hitomi_Honda", "Yuri_Choi", "Yujin_Ahn", "Wonyoung_Chang"]
     name_list = ["Kwon Eunbi", "Sakura Miyawaki", "Hyewon Kang", "Yena Choi", "Cheyeon Lee", \
-                "Chewon Kim", "Minju Kim", "Nako Yabuki", "Hitomi Honda", "Yuri Choi", "Yujin Ahn", "Wonyoung hang"]
-    selected_name_list = ["selected" if i == value_list.index(name) else None for i in range(len(value_list))]
+                "Chewon Kim", "Minju Kim", "Nako Yabuki", "Hitomi Honda", "Yuri Choi", "Yujin Ahn", "Wonyoung Chang"]
 
     num_pics_list = [1, 5, 10, 20]
     str_pics_list = [str(num) for num in num_pics_list]
+
+    selected_name_list = ["selected" if i == value_list.index(name) else None for i in range(len(value_list))]
     selected_pics_list = ["selected" if i == str_pics_list.index(num_pics) else None for i in range(len(num_pics_list))]
 
 
