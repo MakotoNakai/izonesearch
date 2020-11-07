@@ -15,16 +15,16 @@
         <p>好きなメンバーを選んで下さい</p>
         メンバー名
         <select name="name">
-            {% for value, name, selected in lists1 %}
-                <option value={{value}} {{selected}}>{{name}}</option>
+            {% for name in lists1 %}
+                <option value={{name}}>{{name}}</option>
             {% endfor %}
         </select><br>
 
 
         画像の枚数
         <select name="num_pics">
-            {% for value, number, selected in lists2 %}
-                <option value={{value}} {{selected}}>{{number}}</option>
+            {% for number in lists2 %}
+                <option value={{number}}>{{number}}</option>
             {% endfor %}
         </select>
 
