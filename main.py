@@ -39,7 +39,7 @@ def index():
         query = "SELECT * FROM izonetable WHERE member = %s AND id = %s"
         filename = "./static/pics/pic_{}.jpg".format(id_)
 
-        DATABASE_URL = os.environ.get('DATABASE_URL')
+        DATABASE_URL = "postgres://youylcnkjyfyfy:20a5d945df5a9da524c823962294428191105ef78735d82ff42d3ba216642a5b@ec2-50-16-198-4.compute-1.amazonaws.com:5432/d8o6aq59fi4v03"
         connect = psycopg2.connect(DATABASE_URL, sslmode='require')
         cursor = connect.cursor() 
 
