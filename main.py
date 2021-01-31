@@ -55,7 +55,14 @@ def index():
         filename = "./static/pics/pic_{}.jpg".format(id_)
 
         DATABASE_URL = "postgres://youylcnkjyfyfy:20a5d945df5a9da524c823962294428191105ef78735d82ff42d3ba216642a5b@ec2-50-16-198-4.compute-1.amazonaws.com:5432/d8o6aq59fi4v03"
-        connect = psycopg2.connect(DATABASE_URL, sslmode='require')
+        # connect = psycopg2.connect(DATABASE_URL, sslmode='require')
+        connect = psycopg2.connect(
+            database = 'izonedb',
+            user ='makotonakai',
+            password = 'postgresql',
+            host = '192.168.50.30',
+            port = 5432
+        )
         cursor = connect.cursor() 
 
         try:
@@ -90,7 +97,7 @@ def index():
 if __name__ == "__main__":
 
     # アプリを実行
-    app.run(debug=True, threaded=True)
+    app.run(host="0.0.0.0", debug=True, threaded=True)
 
 
     
